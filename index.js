@@ -1,3 +1,3 @@
-const logger = require('./logger');
+const logger = require('./logger')('main');
 
-logger.info('hello, world!');
+logger.info('Welcome to RabbitMQ File Transfer service!');
