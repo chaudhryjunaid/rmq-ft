@@ -7,7 +7,6 @@ module.exports = (_service = 'default') => createLogger({
     format.colorize(),
     format.timestamp({
       format: 'YYYY-MM-DD HH:mm:ss',
-      
     }),
     format.errors({ stack: true }),
     format.splat(),
