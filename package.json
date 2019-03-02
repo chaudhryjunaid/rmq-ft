@@ -11,6 +11,7 @@
   "dependencies": {
     "amqplib": "^0.5.3",
     "minimist": "^1.2.0",
+    "moment-timezone": "^0.5.23",
     "ramda": "^0.26.1",
     "winston": "^3.2.1"
   },
