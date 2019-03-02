@@ -82,8 +82,3 @@ typings/
 # OS X
 .DS_Store
 
-# JSON files
-*.json
-
-# custom scripts
-whiteboard/

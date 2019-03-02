@@ -11,5 +11,8 @@
   "dependencies": {
     "amqplib": "^0.5.3",
     "ramda": "^0.26.1"
+  },
+  "devDependencies": {
+    "eslint": "^5.15.0"
   }
 }
