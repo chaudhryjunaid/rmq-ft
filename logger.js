@@ -1,5 +1,6 @@
 const { createLogger, format, transports } = require('winston');
 const util = require('util');
+const _ = require('lodash');
 
 module.exports = (_service = 'default') => createLogger({
   level: 'debug',
@@ -14,7 +15,8 @@ module.exports = (_service = 'default') => createLogger({
       const {
         timestamp, level, message, service, ...meta
       } = info;
-      let formattedMeta = util.inspect(meta, {
+      const metaWithoutSymbols = _.pickBy(meta, (val, key) => typeof key !== 'symbol');
+      let formattedMeta = util.inspect(metaWithoutSymbols, {
         colors: true,
         depth: null,
       });

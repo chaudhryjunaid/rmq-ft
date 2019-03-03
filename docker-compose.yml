@@ -13,3 +13,18 @@ services:
       - "15672:15672"
       - "5672:5672"
     restart: on-failure
+  bugs_bunny:
+        container_name: rmq-ft
+        build:
+            context: ./
+            dockerfile: Dockerfile
+        volumes:
+            - ./:/app
+            - rmq-ft-node-modules:/app/node_modules
+        environment:
+          CONSUMER_ID: 'bugs-bunny'
+        depends_on:
+            - rabbitmq
+        restart: on-failure
+volumes:
+  rmq-ft-node-modules:
