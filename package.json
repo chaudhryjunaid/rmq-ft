@@ -11,10 +11,6 @@
   "license": "MIT",
   "dependencies": {
     "amqplib": "^0.5.3",
-    "inquirer": "^6.2.2",
-    "inquirer-autocomplete-prompt": "^1.0.1",
-    "inquirer-command-prompt": "0.0.8",
-    "inquirer-fuzzy-path": "^2.0.2",
     "lodash": "^4.17.11",
     "minimist": "^1.2.0",
     "moment-timezone": "^0.5.23",
