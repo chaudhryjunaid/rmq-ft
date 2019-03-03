@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "npm i && while true; do sleep 100; done;",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Chaudhry Junaid Anwar",
