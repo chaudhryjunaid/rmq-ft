@@ -1,5 +1,6 @@
 const common = require('./common');
 const config = require('../config');
+const logger = require('../logger')('rmq-consumer');
 
 let consumerID = null;
 
@@ -25,6 +26,7 @@ exports.init = async (_consumerID) => {
 
   await channel.prefetch(1);
 
+  logger.info(`Now Listening on rabbitmq queue: '${consumerID}' boundWith: '${consumerID}.#'`);
   await channel.consume(consumerID, (msg) => {
     const { content, fields: { routingKey } } = msg;
     console.log(`${routingKey}::${content.toString()}`);

@@ -15,7 +15,9 @@ exports.ensureConnection = async (mode = 'consume', url = 'amqp://localhost') =>
 };
 
 exports.closeConnection = async (mode = 'publish') => {
-  await connections[mode].close();
+  if (connections[mode]) {
+    await connections[mode].close();
+  }
   connections[mode] = null;
 };
 
