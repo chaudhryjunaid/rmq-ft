@@ -23,6 +23,7 @@ services:
             - rmq-ft-node-modules:/app/node_modules
         environment:
           CONSUMER_ID: 'bugs-bunny'
+          RABBITMQ_URL: 'amqp://rabbitmq'
         depends_on:
             - rabbitmq
         restart: on-failure

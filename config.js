@@ -10,6 +10,6 @@ nconf.argv({
     describe: 'consumer to send file to',
   },
 })
-  .env(['CONSUMER_ID']);
+  .env(['CONSUMER_ID', 'RABBITMQ_URL']);
 
 module.exports = nconf.get();

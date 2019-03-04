@@ -1,4 +1,5 @@
 const common = require('./common');
+const config = require('../config');
 
 let consumerID = null;
 
@@ -7,9 +8,9 @@ exports.init = async (_consumerID) => {
     throw new Error(`Already registered as: ${consumerID}`);
   }
 
-  const conn = common.ensureConnection('publish');
+  const conn = await common.ensureConnection('consume', config.RABBITMQ_URL);
   consumerID = _consumerID;
-  const channel = conn.createChannel();
+  const channel = await conn.createChannel();
 
   await channel.assertExchange('file', 'topic', {
     persistent: true,
@@ -24,8 +25,9 @@ exports.init = async (_consumerID) => {
 
   await channel.prefetch(1);
 
-  await channel.consume(consumerID, (data) => {
-    const { content, fields: { routingKey } } = data;
-    console.log(`${routingKey}::${content.toString().length}`);
+  await channel.consume(consumerID, (msg) => {
+    const { content, fields: { routingKey } } = msg;
+    console.log(`${routingKey}::${content.toString()}`);
+    channel.ack(msg);
   });
 };

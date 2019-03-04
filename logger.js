@@ -20,7 +20,7 @@ module.exports = (_service = 'default') => createLogger({
         colors: true,
         depth: null,
       });
-      formattedMeta = formattedMeta && ` ${formattedMeta}`;
+      formattedMeta = formattedMeta !== '{}' ? ` ${formattedMeta}` : '';
       return `[${timestamp}] ${service}::${level}: ${message}${formattedMeta}`;
     }),
   ),
