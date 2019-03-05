@@ -2,15 +2,31 @@ const config = require('./config');
 const logger = require('./logger')('main');
 const rmq = require('./rabbitmq');
 
+const receiverCallback = async (msg) => {
+  const { content, fields: { routingKey } } = msg;
+  console.log(`REQUEST> ${routingKey}::${content.toString()}`);
+  await rmq.producer.reply({status: 'success'})
+};
+
 (async () => {
-  if (config.CONSUMER_ID) {
-    return rmq.consumer.init(config.CONSUMER_ID);
+  if (!config.CONSUMER_ID) {
+    return logger.error('Please provide consumer ID!');
   }
 
-  logger.info(`Publishing file ${config.file} to consumer: ${config.sendTo}`);
-  await rmq.producer.init();
-  await rmq.producer.sendFile(config.file, config.sendTo);
-  await rmq.common.closeConnection('publish');
+  if (!!config.file !== !!config.sendTo) {
+    return logger.error('Inconsistent args!');
+  }
+
+  if (config.file) {
+    logger.info(`Publishing file ${config.file} to consumer: ${config.sendTo}`);
+    await rmq.producer.init();
+    await rmq.producer.sendFile(config.file, config.sendTo);
+    await rmq.common.closeConnection('publish');
+    await rmq.common.closeConnection('consume');
+  } else {
+    await rmq.consumer.init(config.CONSUMER_ID, 'consume', receiverCallback);
+  }
+
   return 0;
 })();
 

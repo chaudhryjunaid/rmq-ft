@@ -22,14 +22,14 @@ exports.closeConnection = async (mode = 'publish') => {
 };
 
 exports.publishWithConfirmation = async (
-  confirmChannel, exchange, routingKey, content, options = {}
+  confirmChannel, exchange, routingKey, content, options = {},
 ) => (
   new Promise((resolve, reject) => {
     confirmChannel.publish(exchange, routingKey, content, options, async (err, ok) => {
       if (err) {
         return reject(err);
       }
-      resolve(ok);
+      return resolve(ok);
     });
   })
 );
