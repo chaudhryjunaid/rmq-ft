@@ -5,7 +5,7 @@ const rmq = require('./rabbitmq');
 const receiverCallback = async (msg) => {
   const { content, fields: { routingKey } } = msg;
   console.log(`REQUEST> ${routingKey}::${content.toString()}`);
-  await rmq.producer.reply({status: 'success'})
+  await rmq.producer.reply({ status: 'success' }, msg);
 };
 
 (async () => {
@@ -17,9 +17,10 @@ const receiverCallback = async (msg) => {
     return logger.error('Inconsistent args!');
   }
 
+  await rmq.producer.init();
+
   if (config.file) {
     logger.info(`Publishing file ${config.file} to consumer: ${config.sendTo}`);
-    await rmq.producer.init();
     await rmq.producer.sendFile(config.file, config.sendTo);
     await rmq.common.closeConnection('publish');
     await rmq.common.closeConnection('consume');
